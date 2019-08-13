@@ -11,6 +11,7 @@ public class Pathfinder : MonoBehaviour
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
     Queue<Waypoint> queue = new Queue<Waypoint>();
     bool isRunning = true;
+    Waypoint searchCentre;
 
     Vector2Int[] directions = {
         Vector2Int.up,
@@ -24,8 +25,7 @@ public class Pathfinder : MonoBehaviour
     {
         Loadblocks();
         ColorStartAndEnd();
-        Pathfind();
-        
+        Pathfind();     
     }
 
     private void Pathfind()
@@ -34,28 +34,28 @@ public class Pathfinder : MonoBehaviour
 
         while (queue.Count > 0 && isRunning)
         {
-            var search = queue.Dequeue();
-            HaltIfSearchingIfEndFound(search);
-            ExploreNeighbours(search);
-            search.isExplored = true;
+            var searchCentre = queue.Dequeue();
+            HaltIfSearchingIfEndFound(searchCentre);
+            ExploreNeighbours();
+            searchCentre.isExplored = true;
         }
        
     }
 
-    private void HaltIfSearchingIfEndFound(Waypoint search)
+    private void HaltIfSearchingIfEndFound(Waypoint searchCentre)
     {
-        if (search == endWaypoint)
+        if (searchCentre == endWaypoint)
         {
             isRunning = false;
         }
     }
 
-    private void ExploreNeighbours(Waypoint from)
+    private void ExploreNeighbours()
     {
         if (!isRunning) { return; }
         foreach (Vector2Int direction in directions)
         {
-            Vector2Int neighbourCoordinates = startWaypoint.GetGridPos() + direction;
+            Vector2Int neighbourCoordinates = searchCentre.GetGridPos() + direction;
             try
             {
                 QueueNewNeighbours(neighbourCoordinates);
@@ -67,21 +67,22 @@ public class Pathfinder : MonoBehaviour
     private void QueueNewNeighbours(Vector2Int neighbourCoordinates)
     {
         Waypoint neighbour = grid[neighbourCoordinates];
-        if (neighbour.isExplored)
+        if (neighbour.isExplored || queue.Contains(neighbour))
         {
 
         }
         else
         {
-            grid[neighbourCoordinates].SetTopcolor(Color.blue);
+            
             queue.Enqueue(neighbour);
+            neighbour.exploredFrom = searchCentre;
         }
     }
 
     private void ColorStartAndEnd()
     {
         startWaypoint.SetTopcolor(Color.green);
-        endWaypoint.SetTopcolor(Color.blue);
+        endWaypoint.SetTopcolor(Color.red);
     }
 
     private void Loadblocks()
