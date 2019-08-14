@@ -13,6 +13,7 @@ public class Waypoint : MonoBehaviour
 
     public int GetGridSize()
     {
+        Debug.Log("Get Grid Size");
         return gridSize;
     }
 
