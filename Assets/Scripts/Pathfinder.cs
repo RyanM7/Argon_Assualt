@@ -6,7 +6,6 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] Waypoint startWaypoint, endWaypoint;
-
     
     Queue<Waypoint> queue = new Queue<Waypoint>();
 
@@ -41,9 +40,9 @@ public class Pathfinder : MonoBehaviour
 
         Waypoint previous = endWaypoint.exploredFrom;
         Debug.Log("the waypoints here" + endWaypoint);
+
         while (previous != startWaypoint)
-        {
-            
+        {          
             path.Add(previous);
             Debug.Log("ive got previous" + previous );
             previous = previous.exploredFrom;
@@ -65,8 +64,7 @@ public class Pathfinder : MonoBehaviour
             HaltIfSearchingIfEndFound();
             ExploreNeighbours();
             searchCentre.isExplored = true;
-        }
-       
+        }       
     }
 
     private void HaltIfSearchingIfEndFound()
@@ -88,7 +86,8 @@ public class Pathfinder : MonoBehaviour
             print("For each loop  explore neighbours");
             Vector2Int neighbourCoordinates = startWaypoint.GetGridPos() + direction;
 
-            if (grid.ContainsKey(neighbourCoordinates)) { print("am i being ran?"); QueueNewNeighbours(neighbourCoordinates); }
+            if (grid.ContainsKey(neighbourCoordinates))
+            { print("am i being ran?"); QueueNewNeighbours(neighbourCoordinates); }
  
         }
     }

@@ -31,9 +31,4 @@ public class Waypoint : MonoBehaviour
         topMeshRenderer.material.color = color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
