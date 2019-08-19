@@ -29,6 +29,7 @@ public class Waypoint : MonoBehaviour
 
     void OnMouseOver()
     {
+        print("hovering");
         if (Input.GetMouseButtonDown(0)) // left click
         {
             if (isPlaceable)
