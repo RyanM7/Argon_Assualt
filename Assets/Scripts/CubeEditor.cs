@@ -9,7 +9,7 @@ public class CubeEditor : MonoBehaviour
 {
     Waypoint waypoint;
 
-    void Awake()
+    private void Awake()
     {
         waypoint = GetComponent<Waypoint>();
     }
@@ -22,15 +22,21 @@ public class CubeEditor : MonoBehaviour
 
     private void SnapToGrid()
     {
-        int gridsize = waypoint.GetGridSize();
-       
-        transform.position = new Vector3(waypoint.GetGridPos().x * gridsize ,0, waypoint.GetGridPos().y * gridsize);
+        int gridSize = waypoint.GetGridSize();
+        transform.position = new Vector3(
+            waypoint.GetGridPos().x * gridSize,
+            0f,
+            waypoint.GetGridPos().y * gridSize
+        );
     }
 
     private void UpdateLabel()
     {
         TextMesh textMesh = GetComponentInChildren<TextMesh>();
-        string labelText = waypoint.GetGridPos().x  + "," + waypoint.GetGridPos().y ;
+        string labelText =
+            waypoint.GetGridPos().x +
+            "," +
+            waypoint.GetGridPos().y;
         textMesh.text = labelText;
         gameObject.name = labelText;
     }
